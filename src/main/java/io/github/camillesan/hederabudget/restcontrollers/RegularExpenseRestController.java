@@ -15,11 +15,13 @@ public class RegularExpenseRestController {
     RegularExpenseRepository regularExpenseRepository;
 
     @PostMapping(value = "/add")
+    @CrossOrigin(origins = "*")
     public RegularExpense addNew(@RequestBody RegularExpense regularExpense) {
         return regularExpenseRepository.save(regularExpense);
     }
 
     @GetMapping(value = "/all")
+    @CrossOrigin(origins = "*")
     public Iterable<RegularExpense> getAll() {
         return regularExpenseRepository.findAll();
     }

@@ -15,11 +15,13 @@ public class RegularIncomeRestController {
     RegularIncomeRepository regularIncomeRepository;
 
     @PostMapping(value = "/add")
+    @CrossOrigin(origins = "*")
     public RegularIncome addNew(@RequestBody RegularIncome regularIncome) {
         return regularIncomeRepository.save(regularIncome);
     }
 
     @GetMapping(value = "/all")
+    @CrossOrigin(origins = "*")
     public Iterable<RegularIncome> getAll() {
         return regularIncomeRepository.findAll();
     }

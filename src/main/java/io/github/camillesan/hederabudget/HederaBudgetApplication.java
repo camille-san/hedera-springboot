@@ -10,18 +10,21 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 @Slf4j
 public class HederaBudgetApplication implements CommandLineRunner {
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@Override
-	public void run(String... args) {
-		log.info("============== {}", env.getProperty("spring.datasource.url"));
-		log.info("============== {}", env.getProperty("spring.datasource.username"));
-		log.info("============== {}", env.getProperty("spring.datasource.password"));
-	}
-	public static void main(String[] args) {
-		System.err.println("=============== hello");
-		SpringApplication.run(HederaBudgetApplication.class, args);
-	}
+    @Override
+    public void run(String... args) {
+        System.err.println("ewqewqe");
+        log.info("=== DATASOURCE: " + env.getProperty("spring.datasource.url"));
+        log.info("=== POSTGRES_USER: " + env.getProperty("POSTGRES_USER"));
+        log.info("=== POSTGRES_HOST: " + env.getProperty("POSTGRES_HOST"));
+        log.info("=== POSTGRES_PASSWORD: " + env.getProperty("POSTGRES_PASSWORD"));
+        log.info("=== POSTGRES_DB: " + env.getProperty("POSTGRES_DB"));
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(HederaBudgetApplication.class, args);
+    }
 
 }

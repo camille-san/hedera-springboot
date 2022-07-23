@@ -1,49 +1,61 @@
 services:
-  backend:
-    # Path to dockerfile.
-    # '.' represents the current directory in which
-    # compose.yml is present.
-    build: .
-#    restart: unless-stopped
-    # Mapping of container port to host (my port, container port)
-#    ports:
-#      - 8080:8080
-    environment:
-      POSTGRES_USER: 'hedera'
-      POSTGRES_PASSWORD: 'password'
-      POSTGRES_DB: 'hedera-dev'
-      POSTGRES_HOST: db
-    depends_on:
-      - db
-    networks:
-      - spring-postgres
+  # =========================================================
   db:
     # Image to fetch from docker hub
     image: postgres
-#    restart: unless-stopped
     ports:
       - 5432:5432
-    #    secrets:
-    #      - db-password
-    # Mount volume (mine vs container)
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - spring-postgres
     # Environment variables for startup script
     # container will use these variables
     # to start the container with these define variables.
     environment:
       POSTGRES_USER: 'hedera'
       POSTGRES_PASSWORD: 'password'
-#      POSTGRES_DB: 'hedera-dev'
-#      POSTGRES_HOST: 'db'
-#    expose:
-#      5432
+    # Mount volume (my local path (host) vs container's)
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - spring-postgres
+  # =========================================================
+  backend:
+    # Path to dockerfile.
+    # '.' represents the current directory in which
+    # compose.yml is present.
+    build: /hedera-budget-springboot
+    # Mapping of container port to host (my port, container port)
+    ports:
+      - 8080:8080
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB: 'hedera-dev'
+      POSTGRES_USER: 'hedera'
+      POSTGRES_PASSWORD: 'password'
+    depends_on:
+      - db
+    networks:
+      - spring-postgres
+      - spring-react
+  # =========================================================
+  frontend:
+    build: /hedera-budget-react
+    volumes:
+      - './hedera-budget-react/src:/app/src'
+      - './hedera-budget-react/public:/app/public'
+    ports:
+      - 8090:5173
+      # args:
+      #   REACT_APP_API_BASE_URL: http://127.0.0.1:8080
+      # environment:
+      # BACKEND_HOST: backend
+      # BACKEND_PORT: '8080'
+      # REACT_APP_API_BASE_URL: http://127.0.0.1:8080
+    depends_on:
+      - backend
+    networks:
+      - spring-react
 volumes:
   db-data:
-#secrets:
-#  db-password:
-#    file: db/password.txt
 networks:
   spring-postgres: {}
+  spring-react: {}
