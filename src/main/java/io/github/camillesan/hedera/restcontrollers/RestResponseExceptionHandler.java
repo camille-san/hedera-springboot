@@ -26,12 +26,10 @@ public class RestResponseExceptionHandler
 class Error {
 
     private String errorCode;
-    private String errorMessageEN;
-    private String errorMessageFR;
+    private String errorMessage;
 
     public Error(ErrorCode errorCode) {
         this.errorCode = errorCode.getErrorCode();
-        this.errorMessageEN = getErrorMessageEN();
-        this.errorMessageFR = getErrorMessageFR();
+        this.errorMessage = errorCode.getErrorMessage();
     }
 }

@@ -64,9 +64,9 @@ class UserServiceTest {
         String email = "new.email";
         User newUser = new User();
         newUser.setEmail(email);
-        newUser.setPassword("");
-        newUser.setFirstName("");
-        newUser.setLastName("");
+        newUser.setPassword("p");
+        newUser.setFirstName("f");
+        newUser.setLastName("l");
         User user = userService.addNewUser(newUser);
         assertEquals(email, user.getEmail());
         assertNotNull(user.getId());
@@ -77,42 +77,79 @@ class UserServiceTest {
     public void testNewUserFail() {
         User newUser = new User();
         newUser.setEmail(mock.USER1_EMAIL);
-        newUser.setPassword("");
-        newUser.setFirstName("");
-        newUser.setLastName("");
+        newUser.setPassword("p");
+        newUser.setFirstName("f");
+        newUser.setLastName("l");
         HederaException thrown = assertThrows(HederaException.class, () -> {
             userService.addNewUser(newUser);
         }, "HederaException was expected");
         assertEquals(ErrorCode.NEW_USER_EMAIL_TAKEN, thrown.getErrorCode());
     }
 
-    @DisplayName("Add new user should fail because one of the mandatory fields is missing")
+    @DisplayName("Add new user should fail because one of the mandatory fields is null")
     @Test
-    public void testNewUserFailFieldMissing() {
+    public void testNewUserFailFieldNull() {
         List<User> failingUsers = new ArrayList<>();
         User noEmailUser = new User();
         noEmailUser.setEmail(null);
-        noEmailUser.setPassword("");
-        noEmailUser.setFirstName("");
-        noEmailUser.setLastName("");
+        noEmailUser.setPassword("p");
+        noEmailUser.setFirstName("f");
+        noEmailUser.setLastName("l");
         failingUsers.add(noEmailUser);
         User noPwUser = new User();
-        noPwUser.setEmail("");
+        noPwUser.setEmail("e");
         noPwUser.setPassword(null);
-        noPwUser.setFirstName("");
-        noPwUser.setLastName("");
+        noPwUser.setFirstName("f");
+        noPwUser.setLastName("l");
         failingUsers.add(noPwUser);
         User noFirstNameUser = new User();
-        noFirstNameUser.setEmail("");
-        noFirstNameUser.setPassword("");
+        noFirstNameUser.setEmail("e");
+        noFirstNameUser.setPassword("p");
         noFirstNameUser.setFirstName(null);
-        noFirstNameUser.setLastName("");
+        noFirstNameUser.setLastName("l");
         failingUsers.add(noFirstNameUser);
         User noLastNameUser = new User();
-        noLastNameUser.setEmail("");
-        noLastNameUser.setPassword("");
-        noLastNameUser.setFirstName("");
+        noLastNameUser.setEmail("e");
+        noLastNameUser.setPassword("p");
+        noLastNameUser.setFirstName("f");
         noLastNameUser.setLastName(null);
+        failingUsers.add(noLastNameUser);
+
+        failingUsers.forEach(user -> {
+            HederaException thrown = assertThrows(HederaException.class, () -> {
+                userService.addNewUser(user);
+            }, "HederaException was expected");
+            assertEquals(ErrorCode.NEW_USER_FIELD_MISSING, thrown.getErrorCode());
+        });
+    }
+
+    @DisplayName("Add new user should fail because one of the mandatory fields is empty")
+    @Test
+    public void testNewUserFailFieldStringEmpty() {
+        List<User> failingUsers = new ArrayList<>();
+        User noEmailUser = new User();
+        noEmailUser.setEmail("");
+        noEmailUser.setPassword("p");
+        noEmailUser.setFirstName("f");
+        noEmailUser.setLastName("l");
+        failingUsers.add(noEmailUser);
+        User noPwUser = new User();
+        noPwUser.setEmail("e");
+        noPwUser.setPassword("");
+        noPwUser.setFirstName("f");
+        noPwUser.setLastName("l");
+        failingUsers.add(noPwUser);
+        User noFirstNameUser = new User();
+        noFirstNameUser.setEmail("e");
+        noFirstNameUser.setPassword("p");
+        noFirstNameUser.setFirstName("");
+        noFirstNameUser.setLastName("l");
+        failingUsers.add(noFirstNameUser);
+        User noLastNameUser = new User();
+        noLastNameUser.setEmail("e");
+        noLastNameUser.setPassword("p");
+        noLastNameUser.setFirstName("f");
+        noLastNameUser.setLastName("");
         failingUsers.add(noLastNameUser);
 
         failingUsers.forEach(user -> {

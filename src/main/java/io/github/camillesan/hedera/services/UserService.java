@@ -5,6 +5,7 @@ import io.github.camillesan.hedera.errors.ErrorCode;
 import io.github.camillesan.hedera.exceptions.HederaException;
 import io.github.camillesan.hedera.repositories.users.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,18 @@ public class UserService {
         try {
             if (userRepository.findByEmail(user.getEmail()).isPresent()) {
                 throw new HederaException(ErrorCode.NEW_USER_EMAIL_TAKEN);
+            } else if (isOneUserFieldEmpty(user)) {
+                throw new HederaException(ErrorCode.NEW_USER_FIELD_MISSING);
             } else {
                 return userRepository.save(user);
             }
         } catch (DataIntegrityViolationException ex) {
             throw new HederaException(ErrorCode.NEW_USER_FIELD_MISSING);
         }
+    }
+
+    private boolean isOneUserFieldEmpty(User user) {
+        return StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword()) || StringUtils.isEmpty(user.getFirstName()) || StringUtils.isEmpty(user.getLastName());
     }
 
 }
