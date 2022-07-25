@@ -1,5 +1,6 @@
 package io.github.camillesan.hedera.entities.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.camillesan.hedera.entities.expenses.RegularExpense;
 import io.github.camillesan.hedera.entities.expenses.SingleExpense;
 import io.github.camillesan.hedera.entities.incomes.RegularIncome;
@@ -26,17 +27,5 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    private List<RegularIncome> regularIncomes;
-
-    @OneToMany(mappedBy = "user")
-    private List<SingleIncome> singleIncomes;
-
-    @OneToMany(mappedBy = "user")
-    private List<RegularExpense> regularExpenses;
-
-    @OneToMany(mappedBy = "user")
-    private List<SingleExpense> singleExpenses;
 
 }

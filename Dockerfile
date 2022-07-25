@@ -11,4 +11,4 @@ WORKDIR /opt/app
 COPY ${JAR_FILE} app.jar
 
 # java -jar -Dspring.profiles.active=prod app.jar
-ENTRYPOINT ["java","-jar","-Dspring.profiles.active=postgres_docker","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar", "--spring.profiles.active=postgres_docker"]
