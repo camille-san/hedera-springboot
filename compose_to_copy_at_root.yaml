@@ -39,11 +39,13 @@ services:
   # =========================================================
   frontend:
     build: ./hedera-react-mui
+    # stdin_open: true
+    # tmpfs:
+    #   - /tmp
     # Local directory mounted : container directory
-    # To uncomment when hot reload is solved
+    # To uncomment to have hot reload, doesn't work on Win
     # volumes:
-    #   - './hedera-react-mui/src:/app/src'
-    #   - './hedera-react-mui/public:/app/public'
+    # - './hedera-react-mui:/app'
     ports:
       - 5173:5173
     depends_on:
