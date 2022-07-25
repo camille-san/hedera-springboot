@@ -1,0 +1,58 @@
+services:
+  # =========================================================
+  db:
+    # Image to fetch from docker hub
+    image: postgres
+    # Mapping of container port to host (my local port : container port)
+    ports:
+      - 5432:5432
+    # Environment variables for startup script
+    environment:
+      POSTGRES_USER: 'hedera'
+      POSTGRES_PASSWORD: 'password'
+    # Docker's auto generated mount - container's inside path
+    volumes:
+      - dev-data:/var/lib/postgresql/data
+    # Make backend and db linked together (name is not important)
+    networks:
+      - backend-db
+  # =========================================================
+  backend:
+    # Path to dockerfile to build
+    # '.' represents the current directory in which
+    # compose.yml is present.
+    build: ./hedera-springboot
+    ports:
+      - 8080:8080
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB: 'hedera-dev'
+      POSTGRES_USER: 'hedera'
+      POSTGRES_PASSWORD: 'password'
+    # Make docker compose mount 'db' before 'backend'
+    depends_on:
+      - db
+    networks:
+      - backend-db
+      - frontend-backend
+  # =========================================================
+  frontend:
+    build: ./hedera-react-mui
+    # Local directory mounted : container directory
+    # To uncomment when hot reload is solved
+    # volumes:
+    #   - './hedera-react-mui/src:/app/src'
+    #   - './hedera-react-mui/public:/app/public'
+    ports:
+      - 5173:5173
+    depends_on:
+      - backend
+    networks:
+      - frontend-backend
+  # =========================================================
+volumes:
+  dev-data:
+networks:
+  backend-db: {}
+  frontend-backend: {}
