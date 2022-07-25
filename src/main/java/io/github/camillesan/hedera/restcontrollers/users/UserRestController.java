@@ -1,7 +1,7 @@
 package io.github.camillesan.hedera.restcontrollers.users;
 
 import io.github.camillesan.hedera.entities.users.User;
-import io.github.camillesan.hedera.repositories.users.UserRepository;
+import io.github.camillesan.hedera.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping(value = "/")
     @CrossOrigin(origins = "*")
     public User addNewUser(@RequestBody User user) {
         log.info("[REST] Adding new user: {}", user);
-        return userRepository.save(user);
+        return userService.addNewUser(user);
     }
 
 }

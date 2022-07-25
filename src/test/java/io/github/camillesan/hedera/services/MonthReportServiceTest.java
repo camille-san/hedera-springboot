@@ -34,11 +34,11 @@ public class MonthReportServiceTest {
         MonthReport report = monthReportService.calculateMonth(1L, 7, 2022);
 
         // Expense Christmas Gift shouldn't be present
-        assertFalse(report.getExpenses().stream().anyMatch(e -> e.getLabel().equals(mock.christmasExpense)));
+        assertFalse(report.getExpenses().stream().anyMatch(e -> e.getLabel().equals(mock.CHRISTMAS_EXPENSE)));
         // Income Easter April gift shouldn't be present
-        assertFalse(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.aprilBonus)));
+        assertFalse(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.APRIL_BONUS)));
         // Income Summer July gift should be present
-        assertTrue(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.julyBonus)));
+        assertTrue(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.JULY_BONUS)));
     }
 
     @DisplayName("Report of one user shouldn't include incomes or expenses from another user")
@@ -48,9 +48,9 @@ public class MonthReportServiceTest {
         MonthReport report = monthReportService.calculateMonth(1L, 7, 2022);
 
         // User 2 Expense shouldn't be present
-        assertFalse(report.getExpenses().stream().anyMatch(e -> e.getLabel().equals(mock.user2Expense)));
+        assertFalse(report.getExpenses().stream().anyMatch(e -> e.getLabel().equals(mock.USER2_EXPENSE)));
         // User 2 Income shouldn't be present
-        assertFalse(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.user2Income)));
+        assertFalse(report.getIncomes().stream().anyMatch(i -> i.getLabel().equals(mock.USER2_INCOME)));
     }
 
 }
