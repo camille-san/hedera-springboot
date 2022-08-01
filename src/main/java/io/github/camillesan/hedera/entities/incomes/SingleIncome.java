@@ -27,11 +27,12 @@ public class SingleIncome {
     @Column(nullable = false)
     private IncomeType type;
 
+    @Column(nullable = false)
+    private BigDecimal amount;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
-    private BigDecimal amount;
 
 }

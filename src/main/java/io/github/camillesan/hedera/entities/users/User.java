@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "hedera_user")
+@Table(name = "hedera_user") // USER is a locked word in DB
 @Data
 public class User {
 

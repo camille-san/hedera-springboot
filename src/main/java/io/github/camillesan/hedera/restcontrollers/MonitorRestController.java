@@ -13,7 +13,7 @@ public class MonitorRestController {
     @Autowired
     Environment env;
 
-    @GetMapping(value = "/isalive")
+    @GetMapping(value = "/isAlive")
     public String isAlive() {
         return "Yes I'm alive <3";
     }

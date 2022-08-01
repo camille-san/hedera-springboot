@@ -1,5 +1,6 @@
 package io.github.camillesan.hedera.entities.expenses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.camillesan.hedera.entities.Periodicity;
 import io.github.camillesan.hedera.entities.users.User;
@@ -7,6 +8,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -27,12 +29,22 @@ public class RegularExpense {
     @Column(nullable = false)
     private ExpenseType type;
 
-    @JsonIgnore
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Periodicity periodicity = Periodicity.MONTHLY;
-
     @Column(nullable = false)
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Periodicity periodicity;
+
+    @Column
+    private int periodicityFactor;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @Column
+    private LocalDate endDate;
 
 }

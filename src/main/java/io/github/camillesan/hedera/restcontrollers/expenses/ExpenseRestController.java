@@ -21,28 +21,24 @@ public class ExpenseRestController {
     private SingleExpenseRepository singleExpenseRepository;
 
     @PostMapping(value = "/regular")
-    @CrossOrigin(origins = "*")
     public RegularExpense addNewRegularExpense(@RequestBody RegularExpense regularExpense) {
         log.info("[REST] Adding new regular expense: {}", regularExpense);
         return regularExpenseRepository.save(regularExpense);
     }
 
     @GetMapping(value = "/regulars")
-    @CrossOrigin(origins = "*")
     public List<RegularExpense> getAllRegularExpensesFromUser(@RequestParam Long userId) {
         log.info("[REST] Get all regular expenses of user: {}", userId);
         return regularExpenseRepository.findAllByUserId(userId);
     }
 
     @PutMapping(value = "/regular")
-    @CrossOrigin(origins = "*")
     public RegularExpense updateRegularExpense(@RequestBody RegularExpense regularExpense) {
         log.info("[REST] Updating regular expense: {}", regularExpense);
         return regularExpenseRepository.save(regularExpense);
     }
 
     @DeleteMapping(value = "/regular/{id}")
-    @CrossOrigin(origins = "*")
     public void deleteRegularExpense(@PathVariable Long id) {
         log.info("[REST] Deleting regular expense id: {}", id);
         regularExpenseRepository.deleteById(id);
@@ -51,28 +47,24 @@ public class ExpenseRestController {
 //    ===================================================================
 
     @PostMapping(value = "/single")
-    @CrossOrigin(origins = "*")
     public SingleExpense addNewSingleExpense(@RequestBody SingleExpense singleExpense) {
         log.info("[REST] Adding new single expense: {}", singleExpense);
         return singleExpenseRepository.save(singleExpense);
     }
 
     @GetMapping(value = "/singles")
-    @CrossOrigin(origins = "*")
     public List<SingleExpense> getAllSingleExpensesFromUser(@RequestParam Long userId) {
         log.info("[REST] Get all single expenses of user: {}", userId);
         return singleExpenseRepository.findAllByUserId(userId);
     }
 
     @PutMapping(value = "/single")
-    @CrossOrigin(origins = "*")
     public SingleExpense updateSingleExpense(@RequestBody SingleExpense singleExpense) {
         log.info("[REST] Updating single expense: {}", singleExpense);
         return singleExpenseRepository.save(singleExpense);
     }
 
     @DeleteMapping(value = "/single/{id}")
-    @CrossOrigin(origins = "*")
     public void deleteSingleExpense(@PathVariable Long id) {
         log.info("[REST] Deleting single expense id: {}", id);
         regularExpenseRepository.deleteById(id);

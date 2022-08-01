@@ -1,5 +1,6 @@
 package io.github.camillesan.hedera;
 
+import io.github.camillesan.hedera.entities.Periodicity;
 import io.github.camillesan.hedera.entities.expenses.ExpenseType;
 import io.github.camillesan.hedera.entities.expenses.RegularExpense;
 import io.github.camillesan.hedera.entities.expenses.SingleExpense;
@@ -64,12 +65,16 @@ public class MockTestDataService {
             re11.setUser(testUser1);
             re11.setLabel("Rent 1");
             re11.setType(ExpenseType.RENT);
+            re11.setPeriodicity(Periodicity.MONTH);
+            re11.setStartDate(LocalDate.now());
             re11.setAmount(new BigDecimal("1250.50"));
             regularExpenseRepository.save(re11);
             RegularExpense re12 = new RegularExpense();
             re12.setUser(testUser1);
             re12.setLabel("Groceries 1");
             re12.setType(ExpenseType.FOOD);
+            re12.setPeriodicity(Periodicity.MONTH);
+            re12.setStartDate(LocalDate.now());
             re12.setAmount(new BigDecimal("600"));
             regularExpenseRepository.save(re12);
             SingleExpense se11 = new SingleExpense();
@@ -84,6 +89,8 @@ public class MockTestDataService {
             ri11.setUser(testUser1);
             ri11.setLabel("Salary");
             ri11.setType(IncomeType.SALARY);
+            ri11.setPeriodicity(Periodicity.MONTH);
+            ri11.setStartDate(LocalDate.now());
             ri11.setAmount(new BigDecimal("1700.50"));
             regularIncomeRepository.save(ri11);
 
@@ -107,6 +114,8 @@ public class MockTestDataService {
             re21.setUser(testUser2);
             re21.setLabel(USER2_EXPENSE);
             re21.setType(ExpenseType.RENT);
+            re21.setPeriodicity(Periodicity.MONTH);
+            re21.setStartDate(LocalDate.now());
             re21.setAmount(new BigDecimal("760"));
             regularExpenseRepository.save(re21);
 
@@ -114,6 +123,8 @@ public class MockTestDataService {
             ri21.setUser(testUser2);
             ri21.setLabel(USER2_INCOME);
             ri21.setType(IncomeType.SALARY);
+            ri21.setPeriodicity(Periodicity.MONTH);
+            ri21.setStartDate(LocalDate.now());
             ri21.setAmount(new BigDecimal("760"));
         }
     }
