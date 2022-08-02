@@ -23,8 +23,8 @@ public class SingleExpense {
     @Column(nullable = false)
     private String label;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private ExpenseType type;
 
     @Column(nullable = false)

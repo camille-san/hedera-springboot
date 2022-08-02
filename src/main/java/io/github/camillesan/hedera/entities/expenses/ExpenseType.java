@@ -1,13 +1,26 @@
 package io.github.camillesan.hedera.entities.expenses;
 
-public enum ExpenseType {
+import io.github.camillesan.hedera.entities.users.User;
+import lombok.Data;
 
-    RENT,
-    ENERGY,
-    TAXES,
-    FOOD,
-    MEDICAL,
-    ENTERTAINMENT,
-    GIFT
+import javax.persistence.*;
+
+@Entity
+@Data
+public class ExpenseType {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
+    @Column(nullable = false)
+    private String label;
+
+    @Column
+    private String color;
 
 }

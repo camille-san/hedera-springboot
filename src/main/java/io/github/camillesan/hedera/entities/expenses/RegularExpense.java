@@ -1,7 +1,6 @@
 package io.github.camillesan.hedera.entities.expenses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.camillesan.hedera.entities.Periodicity;
 import io.github.camillesan.hedera.entities.users.User;
 import lombok.Data;
@@ -25,8 +24,8 @@ public class RegularExpense {
     @Column(nullable = false)
     private String label;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private ExpenseType type;
 
     @Column(nullable = false)

@@ -23,8 +23,8 @@ public class SingleIncome {
     @Column(nullable = false)
     private String label;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private IncomeType type;
 
     @Column(nullable = false)
@@ -33,6 +33,5 @@ public class SingleIncome {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(nullable = false)
     private LocalDate date;
-
 
 }
